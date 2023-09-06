@@ -1,0 +1,6 @@
+- group:    00-setup
+  start:    06-09-2023 00:00
+  deadline: 31-12-2023 23:59
+  tasks:
+    - task: multiplication
+      score: 100
