@@ -7,7 +7,7 @@ stages:
 
 .check:
   stage: test
-  image: cr.yandex/crpkun66rq02t8mpkpa4/cpp-course-build-14
+  image: cr.yandex/crp5icde4qogb2dgv49s/cpp-course-build-14
   script:
     - cmake --version
     - mkdir -p build/solutions
@@ -26,6 +26,6 @@ deploy:
   - docker
   stage: test
   script:
-  - docker pull cr.yandex/crpkun66rq02t8mpkpa4/cpp-course-build-14
-  - docker build -f testenv.docker -t cr.yandex/crpkun66rq02t8mpkpa4/cpp-course-beta .
-  - docker push cr.yandex/crpkun66rq02t8mpkpa4/cpp-course-beta:latest
+  - docker pull cr.yandex/crp5icde4qogb2dgv49s/cpp-course-build-14
+  - docker build -f testenv.docker -t cr.yandex/crp5icde4qogb2dgv49s/cpp-course-beta .
+  - docker push cr.yandex/crp5icde4qogb2dgv49s/cpp-course-beta:latest
