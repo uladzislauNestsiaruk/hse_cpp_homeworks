@@ -16,3 +16,14 @@ include_directories(util)
 
 # 0
 add_subdirectory(tasks/multiplication)
+
+
+# 1
+add_subdirectory(tasks/next_even)
+add_subdirectory(tasks/is_leap)
+add_subdirectory(tasks/chocolate)
+add_subdirectory(tasks/min_divisor)
+add_subdirectory(tasks/fibonacci)
+add_subdirectory(tasks/reduce_fraction)
+add_subdirectory(tasks/palindrome)
+add_subdirectory(tasks/password)
