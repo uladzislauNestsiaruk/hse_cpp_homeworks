@@ -1,6 +1,6 @@
 #include "multiplication.h"
 
-int64_t Multiply(int a, int b) {
-    int64_t ans = a * b;
-    return ans;
+long long Multiply(int a, int b) {
+    long long answer = (long long)a * (long long)b;
+    return answer;
 }
