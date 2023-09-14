@@ -12,5 +12,6 @@ int64_t Gcd(int64_t a, int64_t b) {
     return a;
 }
 int64_t ReduceFraction(int64_t numerator, int64_t denominator) {
-    return Gcd(numerator, denominator);
+    int64_t gcd = Gcd(numerator, denominator);
+    return (numerator + denominator) / gcd;
 }
