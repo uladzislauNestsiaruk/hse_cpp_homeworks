@@ -6,24 +6,26 @@ constexpr int8_t MinPasswordCharacterCode = 33;
 constexpr int8_t MaxPasswordCharacterCode = 126;
 
 bool ValidatePassword(const std::string& password) {
-    int8_t lower_case_letters = 0;
-    int8_t capital_letters = 0;
-    int8_t digits = 0;
-    int8_t other_characters = 0;
+    bool lower_case_letters = false;
+    bool capital_letters = false;
+    bool digits = false;
+    bool other_characters = false;
+    if (password.size() < MinPasswordLength && password.size() > MaxPasswordLength) {
+        return false;
+    }
     for (size_t i = 0; i < password.size(); i++) {
         if (password[i] < MinPasswordCharacterCode || password[i] > MaxPasswordCharacterCode) {
             return false;
         }
         if (password[i] >= 'a' && password[i] <= 'z') {
-            lower_case_letters = 1;
+            lower_case_letters = true;
         } else if (password[i] >= 'A' && password[i] <= 'Z') {
-            capital_letters = 1;
+            capital_letters = true;
         } else if (password[i] >= '0' && password[i] <= '9') {
-            digits = 1;
+            digits = true;
         } else {
-            other_characters = 1;
+            other_characters = true;
         }
     }
-    return ((lower_case_letters + capital_letters + digits + other_characters) > 2) &&
-           password.size() >= MinPasswordLength && password.size() <= MaxPasswordLength;
+    return (lower_case_letters + capital_letters + digits + other_characters) > 2;
 }
