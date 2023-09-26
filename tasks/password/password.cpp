@@ -10,7 +10,7 @@ bool ValidatePassword(const std::string& password) {
     bool capital_letters = false;
     bool digits = false;
     bool other_characters = false;
-    if (password.size() < MinPasswordLength && password.size() > MaxPasswordLength) {
+    if (password.size() < MinPasswordLength || password.size() > MaxPasswordLength) {
         return false;
     }
     for (size_t i = 0; i < password.size(); i++) {
