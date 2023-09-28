@@ -1,8 +1,8 @@
 #include "unixpath.h"
 
 std::string NormalizePath(std::string_view current_working_dir, std::string_view path) {
-    std::string result_path = "";
-    std::string processing_part = "";
+    std::string result_path;
+    std::string processing_part;
     for (char character : current_working_dir) {
         result_path += character;
     }
