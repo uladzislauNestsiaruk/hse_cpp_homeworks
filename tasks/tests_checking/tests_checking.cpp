@@ -9,7 +9,7 @@ std::vector<std::string> StudentsOrder(const std::vector<StudentAction>& student
             works_order.push_back((*student_action).name);
         }
     }
-    for (auto student_action : student_actions) {
+    for (const auto &student_action : student_actions) {
         if (student_action.side == Side::Top) {
             works_order.push_back(student_action.name);
         }
