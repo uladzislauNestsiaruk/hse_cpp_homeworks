@@ -6,7 +6,7 @@ std::string NormalizePath(std::string_view current_working_dir, std::string_view
     for (char character : current_working_dir) {
         result_path += character;
     }
-    if(result_path.empty()){
+    if (result_path.empty()) {
         result_path += '/';
     }
     auto go_to_parent_directory = [&]() {
