@@ -22,6 +22,9 @@ std::string NormalizePath(std::string_view current_working_dir, std::string_view
             processing_part += path[i];
             ++i;
         }
+        while (!processing_part.empty() && processing_part.back() == ' ') {
+            processing_part.pop_back();
+        }
         if (processing_part == "..") {
             go_to_parent_directory();
         } else if (processing_part != ".") {
