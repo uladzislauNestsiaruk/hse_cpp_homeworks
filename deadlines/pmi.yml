@@ -1,6 +1,6 @@
 - group: 03-homework-three
-  start: 26-09-2023 00:00
-  deadline: 11-10-2023 23:59
+  start: 02-10-2023 00:00
+  deadline: 18-10-2023 23:59
   tasks:
     - task: provinces
       score: 100
