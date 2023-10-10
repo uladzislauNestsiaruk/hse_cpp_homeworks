@@ -9,7 +9,7 @@ std::string NormalizePath(std::string_view current_working_dir, std::string_view
     if (result_path.empty()) {
         result_path += '/';
     }
-    if(path[0] == '/'){
+    if(path[0] == '/') {
         result_path = "/";
     }
     auto go_to_parent_directory = [&]() {
