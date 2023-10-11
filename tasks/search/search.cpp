@@ -6,28 +6,31 @@
 #include <cmath>
 
 void ClassifyIsWordInteresting(std::string& word, const std::set<std::string> interesting_words,
-                               std::set<std::string>& appeared_interesting_words) {
+                               std::set<std::string>& appeared_interesting_words, int32_t& words_count) {
     if (interesting_words.find(word) != interesting_words.end()) {
         appeared_interesting_words.insert(word);
     }
+    words_count += !word.empty();
     word.clear();
 }
 
-void RecalculateIDFForString(const std::string_view& text, std::map<std::string, double>& idf,
+bool RecalculateIDFForString(const std::string_view& text, std::map<std::string, double>& idf,
                              const std::set<std::string>& interesting_words) {
     std::set<std::string> appeared_interesting_words;
     std::string word;
+    int32_t words_count = 0;
     for (char character : text) {
         if (isalpha(character)) {
             word += character;
         } else {
-            ClassifyIsWordInteresting(word, interesting_words, appeared_interesting_words);
+            ClassifyIsWordInteresting(word, interesting_words, appeared_interesting_words, words_count);
         }
     }
-    ClassifyIsWordInteresting(word, interesting_words, appeared_interesting_words);
+    ClassifyIsWordInteresting(word, interesting_words, appeared_interesting_words, words_count);
     for (const std::string& interesting_word : appeared_interesting_words) {
         ++idf[interesting_word];
     }
+    return words_count > 0;
 }
 
 void RecalculateLineWordAppearance(std::string& word, const std::set<std::string>& interesting_words,
@@ -71,6 +74,7 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
     std::vector<std::pair<int32_t, int32_t>> line_borders;
     std::string word;
     int32_t lines_in_text = 0;
+    int32_t non_empty_lines = 0;
     for (char character : query) {
         if (isalpha(character)) {
             word += character;
@@ -94,11 +98,11 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
             next_pos = text.size();
         }
         line_borders.push_back(std::make_pair(left_pos, next_pos));
-        RecalculateIDFForString(text.substr(left_pos, next_pos - left_pos), idf, interesting_words);
+        non_empty_lines += RecalculateIDFForString(text.substr(left_pos, next_pos - left_pos), idf, interesting_words);
         left_pos = next_pos + 1;
     }
     for (auto& word_idf : idf) {
-        word_idf.second = log2(lines_in_text / word_idf.second);
+        word_idf.second = log2(non_empty_lines / word_idf.second);
     }
     std::map<std::string, int32_t> current_tf;
     left_pos = 0;
