@@ -4,7 +4,6 @@
 #include <map>
 #include <string>
 #include <cmath>
-#include <iostream>
 
 void ClassifyIsWordInteresting(std::string& word, const std::set<std::string> interesting_words,
                                std::set<std::string>& appeared_interesting_words) {
