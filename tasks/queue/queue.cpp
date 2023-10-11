@@ -1,19 +1,20 @@
 #include "queue.h"
 
-Node::Node(int32_t value, Node *next): value(value), next(next) {}
+Node::Node(int32_t value, Node* next) : value(value), next(next) {
+}
 
-Queue::Queue(): front_(nullptr), tail_(nullptr), size_(0){}
+Queue::Queue() : front_(nullptr), tail_(nullptr), size_(0) {
+}
 
-Queue::~Queue(){
+Queue::~Queue() {
     Clear();
     delete front_;
 }
 
-void Queue::Push(int32_t value){
-    if(!size_){
+void Queue::Push(int32_t value) {
+    if (!size_) {
         front_ = tail_ = new Node(value, nullptr);
-    }
-    else{
+    } else {
         Node* next_tail = new Node(value, nullptr);
         tail_->next = next_tail;
         tail_ = next_tail;
@@ -22,7 +23,7 @@ void Queue::Push(int32_t value){
 }
 
 void Queue::Pop() {
-    if(size_){
+    if (size_) {
         Node* temp = front_->next;
         delete front_;
         front_ = temp;
@@ -31,7 +32,7 @@ void Queue::Pop() {
 }
 
 void Queue::Clear() {
-    while(size_){
+    while (size_) {
         --size_;
         Pop();
     }
