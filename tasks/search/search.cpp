@@ -122,7 +122,7 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
     std::sort(lines_relevance_index_order.begin(), lines_relevance_index_order.end(),
               [tf_idf](int32_t left_index, int32_t right_index) { return tf_idf[left_index] > tf_idf[right_index]; });
     for (int32_t line_index : lines_relevance_index_order) {
-        if (answer.size() == results_count) {
+        if (answer.size() == results_count || tf_idf[line_index] == 0) {
             break;
         }
         answer.push_back(text.substr(line_borders[line_index].first,
