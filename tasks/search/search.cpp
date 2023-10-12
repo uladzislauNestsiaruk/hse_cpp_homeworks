@@ -21,7 +21,7 @@ bool RecalculateIDFForString(const std::string_view& text, std::map<std::string,
     int32_t words_count = 0;
     for (char character : text) {
         if (isalpha(character)) {
-            word += character;
+            word += tolower(character);
         } else {
             ClassifyIsWordInteresting(word, interesting_words, appeared_interesting_words, words_count);
         }
@@ -52,7 +52,7 @@ void ProcessLineTfIdf(const std::string_view& text, std::map<std::string, double
     double words_count = 0;
     for (char character : text) {
         if (isalpha(character)) {
-            word += character;
+            word += tolower(character);
         } else {
             RecalculateLineWordAppearance(word, interesting_words, word_appearance, words_count);
         }
@@ -77,7 +77,7 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
     int32_t non_empty_lines = 0;
     for (char character : query) {
         if (isalpha(character)) {
-            word += character;
+            word += tolower(character);
         } else {
             if (!word.empty()) {
                 interesting_words.insert(word);
