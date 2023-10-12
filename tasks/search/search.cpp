@@ -5,8 +5,16 @@
 #include <string>
 #include <cmath>
 
+void StringToLower(std::string& line) {
+    for (size_t i = 0; i < line.size(); i++) {
+        int32_t ascii_code = static_cast<int>(line[i]);
+        line[i] = static_cast<char>((tolower(ascii_code)));
+    }
+}
+
 void ClassifyIsWordInteresting(std::string& word, const std::set<std::string> interesting_words,
                                std::set<std::string>& appeared_interesting_words, int32_t& words_count) {
+    StringToLower(word);
     if (interesting_words.find(word) != interesting_words.end()) {
         appeared_interesting_words.insert(word);
     }
@@ -21,7 +29,7 @@ bool RecalculateIDFForString(const std::string_view& text, std::map<std::string,
     int32_t words_count = 0;
     for (char character : text) {
         if (isalpha(character)) {
-            word += tolower(character);
+            word += character;
         } else {
             ClassifyIsWordInteresting(word, interesting_words, appeared_interesting_words, words_count);
         }
@@ -35,7 +43,7 @@ bool RecalculateIDFForString(const std::string_view& text, std::map<std::string,
 
 void RecalculateLineWordAppearance(std::string& word, const std::set<std::string>& interesting_words,
                                    std::map<std::string, int32_t>& tf, double& words_count) {
-
+    StringToLower(word);
     if (!word.empty()) {
         ++words_count;
         if (interesting_words.find(word) != interesting_words.end()) {
@@ -52,7 +60,7 @@ void ProcessLineTfIdf(const std::string_view& text, std::map<std::string, double
     double words_count = 0;
     for (char character : text) {
         if (isalpha(character)) {
-            word += tolower(character);
+            word += character;
         } else {
             RecalculateLineWordAppearance(word, interesting_words, word_appearance, words_count);
         }
@@ -77,15 +85,17 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
     int32_t non_empty_lines = 0;
     for (char character : query) {
         if (isalpha(character)) {
-            word += tolower(character);
+            word += character;
         } else {
             if (!word.empty()) {
+                StringToLower(word);
                 interesting_words.insert(word);
             }
             word = "";
         }
     }
     if (!word.empty()) {
+        StringToLower(word);
         interesting_words.insert(word);
     }
     word.clear();
