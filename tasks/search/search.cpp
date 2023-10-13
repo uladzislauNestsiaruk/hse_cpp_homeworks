@@ -1,9 +1,9 @@
 #include "search.h"
 
-#include <set>
-#include <map>
-#include <string>
 #include <cmath>
+#include <map>
+#include <set>
+#include <string>
 
 void StringToLower(std::string& line) {
     for (size_t i = 0; i < line.size(); i++) {
@@ -123,17 +123,24 @@ void CalculateTfIdf(const std::vector<std::pair<int32_t, int32_t>>& line_borders
 }
 
 std::vector<std::string_view> Search(std::string_view text, std::string_view query, size_t results_count) {
-    std::map<std::string, double> idf;  // idf value for each word in query
-    std::map<std::string, int32_t>
-        current_tf;  // temporary map, contains tf value for each word in query for specific line in text
-    std::set<std::string> interesting_words;                // query divided in words
-    std::vector<double> tf_idf;                             // tf-idf value calculated for each string
-    std::vector<int32_t> lines_relevance_index_order;       // indexes of lines in text, sorted vy relevance of the line
-    std::vector<std::string_view> answer;                   // best result_count(or less) lines from text
-    std::vector<std::pair<int32_t, int32_t>> line_borders;  // leftmost and rightmost index of each line in text
-    int32_t lines_in_text =
-        0;  // amount of all lines in text, necessary for correct indexation in lines_relevance_index_order
-    int32_t non_empty_lines = 0;  // lines which contains at least one word, necessary for idf calculation
+    // idf value for each word in query
+    std::map<std::string, double> idf;
+    // temporary map, contains tf value for each word in query for specific line in text
+    std::map<std::string, int32_t> current_tf;
+    // query divided in words
+    std::set<std::string> interesting_words;
+    // tf-idf value calculated for each string
+    std::vector<double> tf_idf;
+    // indexes of lines in text, sorted vy relevance of the line
+    std::vector<int32_t> lines_relevance_index_order;
+    // best result_count(or less) lines from text
+    std::vector<std::string_view> answer;
+    // leftmost and rightmost index of each line in text
+    std::vector<std::pair<int32_t, int32_t>> line_borders;
+    // amount of all lines in text, necessary for correct indexation in lines_relevance_index_order
+    int32_t lines_in_text = 0;
+    // lines which contains at least one word, necessary for idf calculation
+    int32_t non_empty_lines = 0;
     DivideQueryToWords(query, interesting_words);
     CalculateIdf(text, lines_relevance_index_order, line_borders, lines_in_text, non_empty_lines, idf,
                  interesting_words);
